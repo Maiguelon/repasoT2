@@ -14,12 +14,7 @@
     "Nombre": "Hot Desk Ventana 01",
     "PrecioPorHora": 600,
     "Reservas": [
-      {
-        "DiaAlquilado" : 2,
-        "HoraInicio": "600",
-        "DuracionHoras": 2,
-        "NombreCliente": "Hu Tao"
-      }
+      
     ],
     "EsDePie": false,
     "Ubicacion": 1

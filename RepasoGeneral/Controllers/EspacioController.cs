@@ -16,4 +16,17 @@ public class EspacioController : ControllerBase
         ADEspacio = new AccesoADatosEspacioJson();
         espacios = ADEspacio.CargarEspacios(rutaEspacios);
     }
+
+    // ----- GET -----
+    [HttpGet("GetEspacios")]
+    public ActionResult<List<Espacio>> GetEspacios()
+    {
+        if (!(espacios == null))
+        {
+            return Ok(espacios);
+        } else
+        {
+            return BadRequest("No hay espacios cargados");
+        }
+    }
 }
