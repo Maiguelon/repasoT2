@@ -14,7 +14,14 @@ public class Reserva
     }
 
     public dia_semana DiaAlquilado {get; set;}
-    public int HoraInicio {get; set;}
-    public int DuracionMinutos {get; set;}
+    public int HoraInicio {get; set;} // usar * 60
+    public int DuracionHoras {get; set;}
     public string NombreCliente {get; set;}
+
+    public int EndTime()
+    {
+        // No necesito validaciones porque lo hago en el controller
+        int HoraFinal = HoraInicio + DuracionHoras * 60;
+        return HoraFinal;
+    }
 }
