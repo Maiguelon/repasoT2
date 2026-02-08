@@ -16,7 +16,7 @@ Un espacio de trabajo compartido desea administrar sus recursos y las reservas. 
    - Si tiene proyector su costo es 10% mayor.
 
 3. **Escritorio (Derivada de Espacio):**
-   - Propiedades: `EsDePie` (bool), `Ubicacion` (string: "Ventana", "Pasillo", "Rincón").
+   - Propiedades: `EsDePie` (bool), `Ubicacion` (enum: "Ventana", "Pasillo", "Rincón").
 
 4. **Reserva:**
    - Propiedades: `FechaHoraInicio` (DateTime), `DuracionHoras` (int), `NombreCliente` (string).
