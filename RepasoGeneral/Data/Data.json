@@ -15,13 +15,14 @@
     "PrecioPorHora": 600,
     "Reservas": [
       {
-        "FechaHoraInicio": "2025-05-20T09:00:00",
+        "DiaAlquilado" : 2,
+        "HoraInicio": "600",
         "DuracionHoras": 2,
-        "NombreCliente": "Ana Gomez"
+        "NombreCliente": "Hu Tao"
       }
     ],
     "EsDePie": false,
-    "Ubicacion": "Ventana"
+    "Ubicacion": 1
   },
   {
     "$type": "escritorio",
@@ -30,6 +31,6 @@
     "PrecioPorHora": 550,
     "Reservas": [],
     "EsDePie": true,
-    "Ubicacion": "Pasillo"
+    "Ubicacion": 2
   }
 ]
