@@ -1,0 +1,35 @@
+[
+  {
+    "$type": "oficina",
+    "Id": 1,
+    "Nombre": "Sala Elon Musk",
+    "PrecioPorHora": 2500,
+    "Reservas": [],
+    "CapacidadPersonas": 10,
+    "TieneProyector": true
+  },
+  {
+    "$type": "escritorio",
+    "Id": 2,
+    "Nombre": "Hot Desk Ventana 01",
+    "PrecioPorHora": 600,
+    "Reservas": [
+      {
+        "FechaHoraInicio": "2025-05-20T09:00:00",
+        "DuracionHoras": 2,
+        "NombreCliente": "Ana Gomez"
+      }
+    ],
+    "EsDePie": false,
+    "Ubicacion": "Ventana"
+  },
+  {
+    "$type": "escritorio",
+    "Id": 3,
+    "Nombre": "Standing Desk Pasillo",
+    "PrecioPorHora": 550,
+    "Reservas": [],
+    "EsDePie": true,
+    "Ubicacion": "Pasillo"
+  }
+]
