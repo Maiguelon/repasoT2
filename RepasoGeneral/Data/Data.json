@@ -49,7 +49,20 @@
     "Id": 5,
     "Nombre": "Sala Fontaine",
     "PrecioHora": 8900,
-    "Reservas": []
+    "Reservas": [
+      {
+        "DiaAlquilado": 4,
+        "HoraInicio": 540,
+        "DuracionHoras": 2,
+        "NombreCliente": "Furina"
+      },
+      {
+        "DiaAlquilado": 4,
+        "HoraInicio": 700,
+        "DuracionHoras": 2,
+        "NombreCliente": "Hu Tao"
+      }
+    ]
   },
   {
     "$type": "escritorio",

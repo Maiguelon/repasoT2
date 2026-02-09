@@ -39,7 +39,7 @@ public class EspacioController : ControllerBase
         {
             return BadRequest("No se encontraron los datos del nuevo espacio");
         }
-        if (nuevo.PrecioHora < 500) // CONSULTAR DECIMALES
+        if (nuevo.PrecioHora < 500) 
         {
             return BadRequest("El precio por hora debe ser mayor a $500.");
         }
@@ -68,5 +68,59 @@ public class EspacioController : ControllerBase
         espacios.Add(nuevo);
         ADEspacio.GuardarEspacios(rutaEspacios, espacios);
         return Created("", nuevo);
+    }
+
+
+    // ----- PUT -----
+    [HttpPut("AgregarReserva/{idEspacio}")]
+    public ActionResult AgregarReservaPorId(int idEspacio, [FromBody] Reserva nuevaReserva)
+    {
+        Espacio aReservar = espacios.FirstOrDefault(e => e.Id == idEspacio);
+        if (aReservar == null)
+        {
+            return BadRequest("No hay espacio con ese Id");
+        }
+
+        // Checks Reglas de negocio
+        if (!nuevaReserva.DiaValido())
+        {
+            return BadRequest("Solo se puede alquilar de Lunes a Viernes");
+        }
+        if (nuevaReserva.HoraInicio < 540 || nuevaReserva.EndTime() > 1080)
+        {
+            return BadRequest("Solo se puede alquilar entre las 9 y 18 hs");
+        }
+        if (nuevaReserva.DuracionHoras < 1 || nuevaReserva.DuracionHoras > 4)
+        {
+            return BadRequest("Las reservas solo pueden durar entre 1 y 4 horas");
+        }
+
+        // Check solapamiento con todos
+        // foreach (var e in espacios)
+        // {
+        //     if (e.Reservas.Any(r => r.DiaAlquilado == nuevaReserva.DiaAlquilado))
+        //     {
+        //         foreach (var r in e.Reservas)
+        //         {
+        //             if (nuevaReserva.HoraInicio < r.EndTime() && nuevaReserva.EndTime() > r.HoraInicio)
+        //             {
+        //                 return BadRequest("Hay solapamiento con otro alquiler");
+        //             }
+        //         }
+        //     }
+        // }
+
+        // solapamiento solo con el propio espacio
+        bool haySolapamiento = aReservar.Reservas.Any(r=>
+        r.DiaAlquilado == nuevaReserva.DiaAlquilado &&
+        nuevaReserva.HoraInicio < r.EndTime() && nuevaReserva.EndTime() > r.HoraInicio);
+        if (haySolapamiento)
+        {
+            return BadRequest("Hay solapamiento de reservas por ese espacio en ese momento");
+        }
+
+        aReservar.Reservas.Add(nuevaReserva); // reservo
+        ADEspacio.GuardarEspacios(rutaEspacios, espacios);
+        return Ok("Espacio Reservado Exitosamente");
     }
 }

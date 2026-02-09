@@ -8,9 +8,7 @@ public class Reserva
         Martes = 2,
         Miercoles = 3,
         Jueves = 4,
-        Viernes = 5, 
-        Sabado = 6,
-        Domingo = 7
+        Viernes = 5
     }
 
     public dia_semana DiaAlquilado {get; set;}
@@ -23,5 +21,10 @@ public class Reserva
         // No necesito validaciones porque lo hago en el controller
         int HoraFinal = HoraInicio + DuracionHoras * 60;
         return HoraFinal;
+    }
+
+    public bool DiaValido()
+    {
+        return Enum.IsDefined(typeof(dia_semana), this.DiaAlquilado);
     }
 }
