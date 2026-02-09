@@ -1,13 +1,27 @@
 namespace alquilerlaboral;
-using System.Text.Json.Serialization; 
+
+using System.Text.Json.Serialization;
 
 // necesario para la herencia
 [JsonDerivedType(typeof(Oficina), typeDiscriminator: "oficina")]
 [JsonDerivedType(typeof(Escritorio), typeDiscriminator: "escritorio")]
 public class Espacio
 {
-    public int Id {get; set;}
-    public string Nombre {get; set;}
-    public double PrecioHora {get; set;}
-    public List<Reserva> Reservas {get; set;}
+    public int Id { get; set; }
+    public string Nombre { get; set; }
+    public double PrecioHora { get; set; }
+    public List<Reserva> Reservas { get; set; } = new List<Reserva>();   
+
+    public double Ganancia()
+    {
+        double monto = 0;
+        if (Reservas.Count > 0)
+        {
+            foreach (Reserva book in Reservas)
+            {
+                monto += book.DuracionHoras * PrecioHora;
+            }
+        }
+        return monto;
+    }
 }

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using alquilerlaboral;
 using System.Text.Json;
+using System.ComponentModel;
+using Microsoft.AspNetCore.Http.HttpResults;
 namespace ConstructoraApi.Controllers;
 
 [ApiController]
@@ -24,9 +26,93 @@ public class EspacioController : ControllerBase
         if (!(espacios == null))
         {
             return Ok(espacios);
-        } else
+        }
+        else
         {
             return BadRequest("No hay espacios cargados");
+        }
+    }
+
+    // Devuelve espacios que no tengan reservas en un dia dado
+    [HttpGet("GetEspaciosDisponibles/{solicitado}")]
+    public ActionResult<List<Espacio>> GetEspaciosDisponibles(Reserva.dia_semana solicitado)
+    {
+        List<Espacio> disponibles = espacios.Where(e =>
+        e.Reservas == null ||
+        !e.Reservas.Any(r => r.DiaAlquilado == solicitado)).ToList();
+
+        if (disponibles.Count > 0)
+        {
+            return Ok(disponibles);
+        }
+        else
+        {
+            return NotFound("No hay espacios disponibles ese día");
+        }
+    }
+
+    [HttpGet("GetRango/{dia}/{inicio}/{fin}")] // obeter RESERVAS en una franja
+    public ActionResult<List<Espacio>> GetRango(Reserva.dia_semana dia, int inicio, int fin)
+    {
+        List<Reserva> enRango = new List<Reserva>();
+        foreach (var e in espacios)
+        {
+            if (e.Reservas != null)
+            {
+                foreach (var booked in e.Reservas)
+                {
+                    if (booked.DiaAlquilado == dia)
+                    {
+                        if ((booked.HoraInicio < fin && booked.HoraInicio > inicio) ||
+                        (booked.EndTime() < fin && booked.EndTime() > inicio) ||
+                        (booked.HoraInicio > inicio && booked.EndTime() < fin))
+                        {
+                            enRango.Add(booked);
+                        }
+                    }
+                }
+            }
+        }
+        if (enRango.Count > 0)
+        {
+            return Ok(enRango);
+        }
+        else
+        {
+            return NotFound("No se encontraron reservas en esa franja horaria");
+        }
+    }
+
+    [HttpGet("GetInforme")]
+    public ActionResult<List<object>> GetInforme()
+    {
+        List<object> lista = new List<object>();
+        foreach (var e in espacios)
+        {
+            string tipoEspacio = "";
+            if (e is Oficina)
+            {
+                tipoEspacio = "Oficina";
+            }
+            else
+            {
+                tipoEspacio = "Escritorio";
+            }
+            var info = new
+            {
+                Nombre = e.Nombre,
+                Tipo = tipoEspacio,
+                GananciaTotal = e.Ganancia()
+            };
+            lista.Add(info);
+        }
+        if (lista.Count > 0)
+        {
+            return Ok(lista);
+        }
+        else
+        {
+            return NotFound("Error, no se encontraron espacios para el informe");
         }
     }
 
@@ -39,7 +125,7 @@ public class EspacioController : ControllerBase
         {
             return BadRequest("No se encontraron los datos del nuevo espacio");
         }
-        if (nuevo.PrecioHora < 500) 
+        if (nuevo.PrecioHora < 500)
         {
             return BadRequest("El precio por hora debe ser mayor a $500.");
         }
@@ -111,7 +197,7 @@ public class EspacioController : ControllerBase
         // }
 
         // solapamiento solo con el propio espacio
-        bool haySolapamiento = aReservar.Reservas.Any(r=>
+        bool haySolapamiento = aReservar.Reservas.Any(r =>
         r.DiaAlquilado == nuevaReserva.DiaAlquilado &&
         nuevaReserva.HoraInicio < r.EndTime() && nuevaReserva.EndTime() > r.HoraInicio);
         if (haySolapamiento)
