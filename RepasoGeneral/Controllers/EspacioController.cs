@@ -116,7 +116,7 @@ public class EspacioController : ControllerBase
         }
     }
 
-    // ----- Post -----
+    // ----- POST -----
     [HttpPost("AgregarEspacio")]
     public ActionResult<string> AgregarEspacio([FromBody] Espacio nuevo)
     {
@@ -208,5 +208,20 @@ public class EspacioController : ControllerBase
         aReservar.Reservas.Add(nuevaReserva); // reservo
         ADEspacio.GuardarEspacios(rutaEspacios, espacios);
         return Ok("Espacio Reservado Exitosamente");
+    }
+
+    // ----- DELETE -----
+    [HttpDelete("BorrarEspacio/{idABorrar}")]
+    public ActionResult BorrarEspacio(int idABorrar)
+    {
+        Espacio aBorrar = espacios.FirstOrDefault(e=> e.Id == idABorrar);
+        if (aBorrar == null)
+        {
+            return BadRequest("No hay espacio con ese Id");
+        }
+
+        espacios.Remove(aBorrar);
+        ADEspacio.GuardarEspacios(rutaEspacios, espacios);
+        return Ok("Espacio aniquilado existosamente.");
     }
 }

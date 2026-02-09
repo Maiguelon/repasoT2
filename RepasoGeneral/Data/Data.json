@@ -32,15 +32,6 @@
     ]
   },
   {
-    "$type": "escritorio",
-    "EsDePie": true,
-    "Ubicacion": 2,
-    "Id": 3,
-    "Nombre": "Standing Desk Pasillo",
-    "PrecioHora": 550,
-    "Reservas": []
-  },
-  {
     "$type": "oficina",
     "CapacidadPersonas": 8,
     "TieneProyector": false,
