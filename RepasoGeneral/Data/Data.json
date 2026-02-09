@@ -1,31 +1,63 @@
 [
   {
     "$type": "oficina",
-    "Id": 1,
-    "Nombre": "Sala Elon Musk",
-    "PrecioPorHora": 2500,
-    "Reservas": [],
     "CapacidadPersonas": 10,
-    "TieneProyector": true
+    "TieneProyector": true,
+    "Id": 1,
+    "Nombre": "Sala Multiusos",
+    "PrecioHora": 6000,
+    "Reservas": []
   },
   {
     "$type": "escritorio",
+    "EsDePie": false,
+    "Ubicacion": 1,
     "Id": 2,
     "Nombre": "Hot Desk Ventana 01",
-    "PrecioPorHora": 600,
+    "PrecioHora": 900,
     "Reservas": [
-      
-    ],
-    "EsDePie": false,
-    "Ubicacion": 1
+      {
+        "DiaAlquilado": 2,
+        "HoraInicio": 600,
+        "DuracionHoras": 2,
+        "NombreCliente": "Hu Tao"
+      }
+    ]
   },
   {
     "$type": "escritorio",
+    "EsDePie": true,
+    "Ubicacion": 2,
     "Id": 3,
     "Nombre": "Standing Desk Pasillo",
-    "PrecioPorHora": 550,
-    "Reservas": [],
+    "PrecioHora": 550,
+    "Reservas": []
+  },
+  {
+    "$type": "oficina",
+    "CapacidadPersonas": 8,
+    "TieneProyector": false,
+    "Id": 4,
+    "Nombre": "Sala Miguelon",
+    "PrecioHora": 4500,
+    "Reservas": []
+  },
+  {
+    "$type": "oficina",
+    "CapacidadPersonas": 12,
+    "TieneProyector": true,
+    "Id": 5,
+    "Nombre": "Sala Fontaine",
+    "PrecioHora": 8900,
+    "Reservas": []
+  },
+  {
+    "$type": "escritorio",
     "EsDePie": true,
-    "Ubicacion": 2
+    "Ubicacion": 3,
+    "Id": 6,
+    "Nombre": "Standing de Rincon",
+    "PrecioHora": 600,
+    "Reservas": []
   }
 ]

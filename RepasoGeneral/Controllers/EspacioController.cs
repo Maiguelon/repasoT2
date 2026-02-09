@@ -29,4 +29,44 @@ public class EspacioController : ControllerBase
             return BadRequest("No hay espacios cargados");
         }
     }
+
+    // ----- Post -----
+    [HttpPost("AgregarEspacio")]
+    public ActionResult<string> AgregarEspacio([FromBody] Espacio nuevo)
+    {
+        // Checkeos reglas de negocio
+        if (nuevo == null)
+        {
+            return BadRequest("No se encontraron los datos del nuevo espacio");
+        }
+        if (nuevo.PrecioHora < 500) // CONSULTAR DECIMALES
+        {
+            return BadRequest("El precio por hora debe ser mayor a $500.");
+        }
+
+        // Checkeo oficina
+        if (nuevo is Oficina oficina) // PREGUNTAR CASTEO
+        {
+            if (oficina.CapacidadPersonas <= 2)
+            {
+                return BadRequest("Las oficinas deben tener capacidad mayor a 2 personas.");
+            }
+        }
+
+        // Checkeo Escritorio
+        if (nuevo is Escritorio escritorio)
+        {
+            if (escritorio.Parado() && escritorio.Ubicacion == Escritorio.ubicacion_escritorio.Ventana)
+            {
+                return BadRequest("Un Escritorio de Pie no puede ir del lado de la ventana");
+            }
+        }
+
+        // Asignacion automatica de Id
+        int NuevoId = espacios.Count > 0 ? espacios.Max(e => e.Id) + 1 : 1;
+        nuevo.Id = NuevoId;
+        espacios.Add(nuevo);
+        ADEspacio.GuardarEspacios(rutaEspacios, espacios);
+        return Created("", nuevo);
+    }
 }

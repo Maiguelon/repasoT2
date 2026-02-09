@@ -7,12 +7,12 @@ public class Oficina : Espacio
     public int CapacidadPersonas {get; set;}
     public bool TieneProyector {get; set;}
 
-    public decimal CalcularPrecioOficina()
+    public double CalcularPrecioOficina()
     {
-        decimal costo = PrecioHora;
+        double costo = PrecioHora;
         if (TieneProyector)
         {
-            costo *= 0.1m;
+            costo *= 0.1;
         }
         return costo;
     }
